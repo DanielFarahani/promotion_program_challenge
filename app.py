@@ -92,7 +92,8 @@ def create_artist_submission():
   codes = list(Promos.query.all()) #TODO cache this better
   win_check = random.choice(codes) == promo_entry['code']
 
-  curr_date = datetime.today()
+  curr_date = datetime.today().date()
+  duplicate = Users.query.filter_by(email=promo_entry['email'], date=curr_date).first()
 
   try:
     new_entry = Users(first=promo_entry['firstname'], last=promo_entry['lastname'], 
@@ -100,15 +101,20 @@ def create_artist_submission():
               date=curr_date)
     db.session.add(new_entry)
     db.session.commit()
-    flash('Congratulation, you have won a $10 voucher. Please use this code WIN2020 to claim your prize.')  # on success
+
+    if win_check: # won
+      flash('Congratulation, you have won a $10 voucher. Please use this code WIN2020 to claim your prize.')
+    if duplicate: # duplicate email within 24h
+      flash('You have already submitted a code today, please wait 24 hours!')
+    elif not win_check: # lost
+      flash('Sorry, you are not a winner. Try a new code in 24 hours.')
   except Exception as e:
     db.session.rollback()
-    flash('Sorry, you are not a winner. Click here to enter another code.')  # on fail
+    flash('Sorry, there was an issue. Please try again!')
   finally:
     db.session.close()
 
   return render_template('pages/home.html')
-
 
 @app.errorhandler(404)
 def not_found_error(error):
