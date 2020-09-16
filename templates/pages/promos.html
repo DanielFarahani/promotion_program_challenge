@@ -2,12 +2,12 @@
 {% block title %}Promos | Winners{% endblock %}
 {% block content %}
 <ul class="items">
-	{% for promos in promoss %}
+	{% for promo in promos %}
 	<li>
         <i class="fas fa-users"></i>
         <div class="item">
-            <h5>Name: {{ promos.first }} {{ promos.last }}</h5>
-            <h5>Date: {{ promos.date.date() }}</h5>
+            <h5>Name: {{ promo.first }} {{ promo.last }}</h5>
+            <h5>Date: {{ promo.date.date() }}</h5>
         </div>
 	</li>
 	{% endfor %}
