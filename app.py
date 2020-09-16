@@ -107,7 +107,8 @@ def create_artist_submission():
     if duplicate: # duplicate email within 24h
       flash('You have already submitted a code today, please wait 24 hours!')
     elif not win_check: # lost
-      flash('Sorry, you are not a winner. Try a new code in 24 hours.')
+      flash('Sorry, you are not a winner. Click here to enter another code.')
+      
   except Exception as e:
     db.session.rollback()
     flash('Sorry, there was an issue. Please try again!')

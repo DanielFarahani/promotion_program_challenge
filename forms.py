@@ -1,19 +1,21 @@
-from datetime import datetime
 from flask_wtf import Form
-from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField
-from wtforms.validators import DataRequired, AnyOf, URL
+from wtforms.fields.html5 import EmailField 
+from wtforms import StringField, TextField
+from wtforms.validators import DataRequired, Email, Length
 
 class PromotionForm(Form):
     firstname = StringField(
         'name', validators=[DataRequired()]
     )
     lastname = StringField(
-        'city', validators=[DataRequired()]
+        'city', 
+        validators=[DataRequired()]
     )    
-    #TODO add email validator
-    email = StringField(
-        'email', validators=[DataRequired()]
+    email = EmailField(
+        'email', 
+        validators=[DataRequired(), Email()]
     )
-    code = StringField(
-        'code_value', validators=[URL()]
+    code = TextField(
+        'code_value', validators=[DataRequired(), 
+            Length(min=8, max=8, message=('Enter a valid code'))]
     )
