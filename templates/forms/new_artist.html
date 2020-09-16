@@ -1,0 +1,38 @@
+{% extends 'layouts/main.html' %}
+{% block title %}New Artist{% endblock %}
+{% block content %}
+  <div class="form-wrapper">
+    <form method="post" class="form">
+      <!-- heading -->
+      <h3 class="form-heading">Enter your details</h3>
+      
+      <!-- first name box -->
+      <div class="form-group">
+        <label for="firt-name">First name</label>
+        {{ form.firstname(class_ = 'form-control', placeholder='Jon', autofocus = true) }}
+      </div>
+
+      <!-- last name box -->
+      <div class="form-group">
+          <label>Last name</label>
+          <div class="form-group">
+            {{ form.lastname(class_ = 'form-control', placeholder='Doe', autofocus = true) }}
+          </div>
+      </div>
+
+      <!-- email box -->
+      <div class="form-group">
+          <label for="email">Email</label>
+          {{ form.email(class_ = 'form-control', placeholder='@email.com', autofocus = true) }}
+      </div>
+
+      <!-- Promotion code box -->
+      <div class="form-group">
+          <label for="code">Promotion code</label>
+          {{ form.code(class_ = 'form-control', placeholder='8-character code', autofocus = true) }}
+      </div>
+
+      <input type="submit" value="Submit" class="btn btn-primary btn-lg btn-block">
+    </form>
+  </div>
+{% endblock %}
