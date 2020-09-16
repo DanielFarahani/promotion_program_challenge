@@ -75,18 +75,18 @@ def index():
 
 #  Artist
 #  ----------------------------------------------------------------
-@app.route('/artists')
-def artists():
+@app.route('/promos')
+def promos():
   data = Users.query.filter(Users.won == True).all()
-  return render_template('pages/artists.html', artists=data)
+  return render_template('pages/promos.html', promos=data)
 
-@app.route('/artists/create', methods=['GET'])
-def create_artist_form():
+@app.route('/promos/new', methods=['GET'])
+def new_promo_code():
   form = PromotionForm()
-  return render_template('forms/new_artist.html', form=form)
+  return render_template('forms/new_promo.html', form=form)
 
-@app.route('/artists/create', methods=['POST'])
-def create_artist_submission():
+@app.route('/promos/new', methods=['POST'])
+def new_promo_submission():
   promo_entry = request.form.to_dict()  # first, last, email, code
 
   codes = list(Promos.query.all()) #TODO cache this better
@@ -108,7 +108,7 @@ def create_artist_submission():
       flash('You have already submitted a code today, please wait 24 hours!')
     elif not win_check: # lost
       flash('Sorry, you are not a winner. Click here to enter another code.')
-      
+
   except Exception as e:
     db.session.rollback()
     flash('Sorry, there was an issue. Please try again!')
