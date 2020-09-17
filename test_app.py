@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import jsonify
 import random
 
-from app import app, db
+from app import app, db, Users
 from datetime import datetime
 
 
@@ -33,7 +33,7 @@ class PromoTestCase(unittest.TestCase):
     def tearDown(self):
         """Executed after reach test"""
         # delete the entries from test db
-        models.Users.query.delete()
+        Users.query.delete()
     
     # questions get
     def test_winner_logic(self):
@@ -48,11 +48,11 @@ class PromoTestCase(unittest.TestCase):
                 email= new_email,
                 promo_code='ZVLJCYTG')
 
-            self.client().post('/promo/new', json=new_code)
+            self.app.post('/promo/new', json=new_code)
             
-        outcomes = list(Users.query.filter(won=True).all())
+        outcomes = list(Users.query.filter_by(won=True).all())
 
-        self.assertNotEqual(len(outcome), 0)
+        self.assertNotEqual(len(outcomes), 0)
 
     # sumbit new promotion code
     def test_new_submission(self):
@@ -63,7 +63,7 @@ class PromoTestCase(unittest.TestCase):
             promo_code='ZVLJCYTG')
 
         q_len_before = len(Users.query.all())        
-        res = self.client().post('/promo/new', json=new_q)
+        res = self.app.post('/promo/new', json=new_code)
         q_len_after = len(Users.query.all()) 
 
         self.assertGreaterEqual(q_len_before, q_len_after)
@@ -77,7 +77,7 @@ class PromoTestCase(unittest.TestCase):
     #         email='test@mail.com',
     #         promo_code='ZVLJCYTG')
 
-    #     res = self.client().post('/promo/new', json=new_code)
+    #     res = self.app.post('/promo/new', json=new_code)
 
     #     self.assertEqual()
 
@@ -85,7 +85,7 @@ class PromoTestCase(unittest.TestCase):
     # # Test invalid promotion code
     # def test_invalid_code(self):
     #     code = 'DEADBEEF'
-    #     res = self.client().post('/promo/new', json=new_code)
+    #     res = self.app.post('/promo/new', json=new_code)
 
     #     self.assertEqual()
 
