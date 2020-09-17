@@ -33,7 +33,8 @@ class PromoTestCase(unittest.TestCase):
     def tearDown(self):
         """Executed after reach test"""
         # delete the entries from test db
-        Users.query.delete()
+        # Users.query.delete()
+        pass
     
     # questions get
     def test_winner_logic(self):
@@ -66,7 +67,7 @@ class PromoTestCase(unittest.TestCase):
         res = self.app.post('/promo/new', json=new_code)
         q_len_after = len(Users.query.all()) 
 
-        self.assertGreaterEqual(q_len_before, q_len_after)
+        self.assertNotEqual(q_len_before, q_len_after)
 
     #TODO need to test flash
     # # Duplicate code
