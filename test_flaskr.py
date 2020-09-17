@@ -8,7 +8,6 @@ import random
 from flaskr import create_app
 from models import setup_db, Question, Category
 from datetime import datetime
-import random
 
 
 class PromoTestCase(unittest.TestCase):
@@ -36,13 +35,17 @@ class PromoTestCase(unittest.TestCase):
     
     # questions get
     def test_winner_logic(self):
-        email_gen = []
-        new_code = dict(
-            first='Test',
-            last='case',
-            email='test@mail.com',
-            promo_code='ZVLJCYTG')
+        rand_chars = [chr(x) for x in range(65, 91)]
+        email_gen = [random.choice(rand_chars) + random.choice(rand_chars) for x in range(26)]
+
         for i in range(26):
+            new_email = random.choice(email_gen) + '@mail.com'
+            new_code = dict(
+                first='Test',
+                last='case',
+                email= new_email,
+                promo_code='ZVLJCYTG')
+
             self.client().post('/promo/new', json=new_code)
         outcomes = list(Users.query.filter(won=True).all())
 
