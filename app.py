@@ -90,7 +90,7 @@ def new_promo_submission():
   promo_entry = request.form.to_dict()  # first, last, email, code
   codes = list(Promos.query.all()) #TODO cache this better
 
-  # win_check = random.choice(codes) == promo_entry['code']
+  win_check = random.choice(codes) == promo_entry['code']
   curr_date = datetime.today().date()
   duplicate = Users.query.filter_by(email=promo_entry['email'], date=curr_date).first()
 
@@ -100,7 +100,7 @@ def new_promo_submission():
               date=curr_date)
     db.session.add(new_entry)
     db.session.commit()
-
+  
     if duplicate: # duplicate email within 24h
       flash('You have already submitted a code today, please wait 24 hours!')
     elif win_check: # won
