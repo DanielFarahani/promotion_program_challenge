@@ -102,10 +102,10 @@ def new_promo_submission():
     db.session.add(new_entry)
     db.session.commit()
 
-    if win_check: # won
-      flash('Congratulation, you have won a $10 voucher. Please use this code WIN2020 to claim your prize.')
     if duplicate: # duplicate email within 24h
       flash('You have already submitted a code today, please wait 24 hours!')
+    elif win_check: # won
+      flash('Congratulation, you have won a $10 voucher. Please use this code WIN2020 to claim your prize.')
     elif not win_check: # lost
       flash('Sorry, you are not a winner. Click here to enter another code.')
 
