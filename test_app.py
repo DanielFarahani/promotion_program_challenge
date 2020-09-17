@@ -47,9 +47,9 @@ class PromoTestCase(unittest.TestCase):
                 first='Test',
                 last='case',
                 email= new_email,
-                promo_code='ZVLJCYTG')
+                code='ZVLJCYTG')
 
-            self.app.post('/promo/new', json=new_code)
+            self.app.post('/promos/new', json=new_code)
             
         outcomes = list(Users.query.filter_by(won=True).all())
 
@@ -61,10 +61,10 @@ class PromoTestCase(unittest.TestCase):
             first='Test',
             last='case',
             email='test@mail.com',
-            promo_code='ZVLJCYTG')
+            code='ZVLJCYTG')
 
         q_len_before = len(Users.query.all())        
-        res = self.app.post('/promo/new', json=new_code)
+        res = self.app.post('/promos/new', json=new_code)
         q_len_after = len(Users.query.all()) 
 
         self.assertNotEqual(q_len_before, q_len_after)
