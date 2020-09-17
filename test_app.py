@@ -40,7 +40,7 @@ class PromoTestCase(unittest.TestCase):
         rand_chars = [chr(x) for x in range(65, 91)]
         email_gen = [random.choice(rand_chars) + random.choice(rand_chars) for x in range(26)]
 
-        for i in range(26):
+        for i in range(50):
             new_email = random.choice(email_gen) + '@mail.com'
             new_code = dict(firstname='Test', lastname='case' + str(i), email= new_email, code='ZVLJCYTG')
 
